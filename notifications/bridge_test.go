@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/distribution/distribution/v3"
-	"github.com/distribution/distribution/v3/internal/dcontext"
+	"github.com/distribution/distribution/v3/internal/uuid"
 	"github.com/distribution/distribution/v3/manifest/schema2"
 	v2 "github.com/distribution/distribution/v3/registry/api/v2"
 	"github.com/distribution/reference"
@@ -20,7 +20,7 @@ var (
 	repo   = "test/repo"
 	source = SourceRecord{
 		Addr:       "remote.test",
-		InstanceID: dcontext.NewUUIDString(),
+		InstanceID: uuid.NewString(),
 	}
 	ub = mustUB(v2.NewURLBuilderFromString("http://test.example.com/", false))
 

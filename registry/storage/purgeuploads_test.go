@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/distribution/distribution/v3/internal/dcontext"
+	"github.com/distribution/distribution/v3/internal/uuid"
 	"github.com/distribution/distribution/v3/registry/storage/driver"
 	"github.com/distribution/distribution/v3/registry/storage/driver/inmemory"
 )
@@ -16,7 +16,7 @@ func testUploadFS(t *testing.T, numUploads int, repoName string, startedAt time.
 	d := inmemory.New()
 	ctx := context.Background()
 	for i := 0; i < numUploads; i++ {
-		addUploads(ctx, t, d, dcontext.NewUUIDString(), repoName, startedAt)
+		addUploads(ctx, t, d, uuid.NewString(), repoName, startedAt)
 	}
 	return d, ctx
 }
@@ -70,7 +70,7 @@ func TestPurgeAll(t *testing.T) {
 	fs, ctx := testUploadFS(t, uploadCount, "test-repo", oneHourAgo)
 
 	// Ensure > 1 repos are purged
-	addUploads(ctx, t, fs, dcontext.NewUUIDString(), "test-repo2", oneHourAgo)
+	addUploads(ctx, t, fs, uuid.NewString(), "test-repo2", oneHourAgo)
 	uploadCount++
 
 	deleted, errs := PurgeUploads(ctx, fs, time.Now(), true)
@@ -92,7 +92,7 @@ func TestPurgeSome(t *testing.T) {
 	newUploadCount := 4
 
 	for i := 0; i < newUploadCount; i++ {
-		addUploads(ctx, t, fs, dcontext.NewUUIDString(), "test-repo", time.Now().Add(1*time.Hour))
+		addUploads(ctx, t, fs, uuid.NewString(), "test-repo", time.Now().Add(1*time.Hour))
 	}
 
 	deleted, errs := PurgeUploads(ctx, fs, time.Now(), true)
@@ -112,7 +112,7 @@ func TestPurgeOnlyUploads(t *testing.T) {
 
 	// Create a directory tree outside _uploads and ensure
 	// these files aren't deleted.
-	dataPath, err := pathFor(uploadDataPathSpec{name: "test-repo", id: dcontext.NewUUIDString()})
+	dataPath, err := pathFor(uploadDataPathSpec{name: "test-repo", id: uuid.NewString()})
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -17,7 +17,7 @@ import (
 	"time"
 
 	"github.com/distribution/distribution/v3"
-	"github.com/distribution/distribution/v3/internal/dcontext"
+	"github.com/distribution/distribution/v3/internal/uuid"
 	"github.com/distribution/distribution/v3/manifest/ocischema"
 	"github.com/distribution/distribution/v3/registry/api/errcode"
 	"github.com/distribution/distribution/v3/testutil"
@@ -199,7 +199,7 @@ func TestBlobServeBlobHEAD(t *testing.T) {
 
 func TestBlobResume(t *testing.T) {
 	dgst, b1 := newRandomBlob(1024)
-	id := dcontext.NewUUIDString()
+	id := uuid.NewString()
 	var m testutil.RequestResponseMap
 	repo, _ := reference.WithName("test.example.com/repo1")
 	m = append(m, testutil.RequestResponseMapping{
@@ -439,7 +439,7 @@ func TestBlobUploadChunked(t *testing.T) {
 		b1[513:1024],
 	}
 	repo, _ := reference.WithName("test.example.com/uploadrepo")
-	uuids := []string{dcontext.NewUUIDString()}
+	uuids := []string{uuid.NewString()}
 	m = append(m, testutil.RequestResponseMapping{
 		Request: testutil.Request{
 			Method: http.MethodPost,
@@ -457,7 +457,7 @@ func TestBlobUploadChunked(t *testing.T) {
 	})
 	offset := 0
 	for i, chunk := range chunks {
-		uuids = append(uuids, dcontext.NewUUIDString())
+		uuids = append(uuids, uuid.NewString())
 		newOffset := offset + len(chunk)
 		m = append(m, testutil.RequestResponseMapping{
 			Request: testutil.Request{
@@ -554,7 +554,7 @@ func TestBlobUploadMonolithic(t *testing.T) {
 	dgst, b1 := newRandomBlob(1024)
 	var m testutil.RequestResponseMap
 	repo, _ := reference.WithName("test.example.com/uploadrepo")
-	uploadID := dcontext.NewUUIDString()
+	uploadID := uuid.NewString()
 	m = append(m, testutil.RequestResponseMapping{
 		Request: testutil.Request{
 			Method: http.MethodPost,
@@ -662,7 +662,7 @@ func TestBlobUploadMonolithicDockerUploadUUIDFromURL(t *testing.T) {
 	dgst, b1 := newRandomBlob(1024)
 	var m testutil.RequestResponseMap
 	repo, _ := reference.WithName("test.example.com/uploadrepo")
-	uploadID := dcontext.NewUUIDString()
+	uploadID := uuid.NewString()
 	m = append(m, testutil.RequestResponseMapping{
 		Request: testutil.Request{
 			Method: http.MethodPost,

@@ -12,7 +12,7 @@ import (
 	"path"
 	"time"
 
-	"github.com/distribution/distribution/v3/internal/dcontext"
+	"github.com/distribution/distribution/v3/internal/uuid"
 	storagedriver "github.com/distribution/distribution/v3/registry/storage/driver"
 	"github.com/distribution/distribution/v3/registry/storage/driver/base"
 	"github.com/distribution/distribution/v3/registry/storage/driver/factory"
@@ -135,7 +135,7 @@ func (d *driver) GetContent(ctx context.Context, path string) ([]byte, error) {
 
 // PutContent stores the []byte content at a location designated by "path".
 func (d *driver) PutContent(ctx context.Context, subPath string, contents []byte) error {
-	tempPath := fmt.Sprintf("%s.%s.tmp", subPath, dcontext.NewUUIDString())
+	tempPath := fmt.Sprintf("%s.%s.tmp", subPath, uuid.NewString())
 
 	// Write to a temporary file to prevent partial writes.
 	writer, err := d.Writer(ctx, tempPath, false)

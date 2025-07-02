@@ -4,7 +4,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/google/uuid"
+	"github.com/distribution/distribution/v3/internal/uuid"
 )
 
 // instanceContext is a context that provides only an instance id. It is
@@ -22,7 +22,7 @@ func (ic *instanceContext) Value(key interface{}) interface{} {
 			// call a random generator from the package initialization
 			// code. For various reasons random could not be available
 			// https://github.com/distribution/distribution/issues/782
-			ic.id = NewUUIDString()
+			ic.id = uuid.NewString()
 		})
 		return ic.id
 	}
@@ -72,8 +72,3 @@ func (smc stringMapContext) Value(key interface{}) interface{} {
 	return smc.Context.Value(key)
 }
 
-// NewUUIDString returns a new V7 UUID string. V7 UUIDs are time-ordered for better database performance.
-// Panics on error to maintain compatibility with uuid.NewString().
-func NewUUIDString() string {
-	return uuid.Must(uuid.NewV7()).String()
-}

@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/distribution/distribution/v3/internal/requestutil"
+	"github.com/distribution/distribution/v3/internal/uuid"
 	"github.com/gorilla/mux"
 )
 
@@ -34,7 +35,7 @@ func WithRequest(ctx context.Context, r *http.Request) context.Context {
 	return &httpRequestContext{
 		Context:   ctx,
 		startedAt: time.Now(),
-		id:        NewUUIDString(),
+		id:        uuid.NewString(),
 		r:         r,
 	}
 }
