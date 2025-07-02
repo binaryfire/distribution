@@ -4,7 +4,6 @@ import (
 	"context"
 	"runtime"
 	"time"
-
 )
 
 // WithTrace allocates a traced timing span in a new context. This allows a
