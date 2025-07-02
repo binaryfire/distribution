@@ -12,7 +12,6 @@ import (
 	"github.com/distribution/distribution/v3/internal/dcontext"
 	"github.com/distribution/distribution/v3/registry/storage/driver"
 	"github.com/distribution/reference"
-	"github.com/google/uuid"
 	"github.com/opencontainers/go-digest"
 	v1 "github.com/opencontainers/image-spec/specs-go/v1"
 )
@@ -145,7 +144,7 @@ func (lbs *linkedBlobStore) Create(ctx context.Context, options ...distribution.
 		}
 	}
 
-	uuid := uuid.NewString()
+	uuid := dcontext.NewUUIDString()
 	startedAt := time.Now().UTC()
 
 	path, err := pathFor(uploadDataPathSpec{

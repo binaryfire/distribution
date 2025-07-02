@@ -5,10 +5,10 @@ import (
 	"time"
 
 	"github.com/distribution/distribution/v3"
+	"github.com/distribution/distribution/v3/internal/dcontext"
 	"github.com/distribution/distribution/v3/internal/requestutil"
 	"github.com/distribution/reference"
 	events "github.com/docker/go-events"
-	"github.com/google/uuid"
 	"github.com/opencontainers/go-digest"
 	v1 "github.com/opencontainers/image-spec/specs-go/v1"
 )
@@ -220,7 +220,7 @@ func (b *bridge) createEvent(action string) *Event {
 // createEvent returns a new event, timestamped, with the specified action.
 func createEvent(action string) *Event {
 	return &Event{
-		ID:        uuid.NewString(),
+		ID:        dcontext.NewUUIDString(),
 		Timestamp: time.Now(),
 		Action:    action,
 	}
