@@ -71,4 +71,3 @@ func (smc stringMapContext) Value(key interface{}) interface{} {
 
 	return smc.Context.Value(key)
 }
-
